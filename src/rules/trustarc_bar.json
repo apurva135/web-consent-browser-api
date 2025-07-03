@@ -1,0 +1,48 @@
+{
+	"$schema": "https://raw.githubusercontent.com/cavi-au/Consent-O-Matic/master/rules.schema.json",
+    "trustarcbar": {
+        "detectors": [
+            {
+                "presentMatcher": {
+                    "parent": null,
+                    "target": {
+                        "selector": "#truste-consent-content, .truste-consent-content, #truste-consent-track"
+                    },
+                    "type": "css"
+                },
+                "showingMatcher": {
+                    "parent": null,
+                    "target": {
+                        "selector": "#truste-consent-content, .truste-consent-content, #truste-consent-track"
+                    },
+                    "type": "css"
+                }
+            }
+        ],
+        "methods": [
+            {
+                "action": {
+                    "actions": [
+                        {
+                            "parent": null,
+                            "target": {
+                                "displayFilter": true,
+                                "selector": "#truste-show-consent"
+                            },
+                            "type": "waitcss"
+                        },
+                        {
+                            "parent": null,
+                            "target": {
+                                "selector": "#truste-show-consent"
+                            },
+                            "type": "click"
+                        }
+                    ],
+                    "type": "list"
+                },
+                "name": "UTILITY"
+            }
+        ]
+    }
+}

@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>[[OPTIONS_TITLE]]</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        user-select: none;
+        min-height: 100vh;
+        min-width: 90vw;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: top;
+        background: #00309a;
+        background: linear-gradient(
+          to right,
+          rgba(0, 48, 154, 1) 0%,
+          rgba(0, 22, 91, 1) 100%
+        );
+        max-width: 80em;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+        line-height: 1.25em;
+      }
+
+      .header {
+        color: white;
+        border-top: 1px solid #2f1988;
+        border-bottom: 1px solid #2f1988;
+      }
+
+      .header ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        padding-left: 1.5em;
+      }
+
+      .header li {
+        display: inline-block;
+        background: rgba(100, 100, 200, 0.2);
+        cursor: pointer;
+        padding: 1em;
+        margin: 0;
+        transition: background 0.2s ease-in-out;
+      }
+
+      .header li:hover {
+        background: rgba(100, 100, 200, 0.5);
+      }
+
+      .header li.active {
+        opacity: 1 !important;
+        background: rgba(100, 100, 255, 0.7);
+      }
+
+      .prehead {
+        position: relative;
+        padding: 1em;
+        color: white;
+        font-family: sans-serif;
+        display: flex;
+        margin-bottom: 0em;
+        background: rgb(44, 69, 193);
+      }
+
+      .prehead .title {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .prehead h1 {
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 1.2em;
+      }
+
+      .prehead h2 {
+        margin-top: 0;
+        margin-bottom: 0;
+        opacity: 0.8;
+        font-weight: normal;
+        font-size: 1em;
+      }
+
+      .prehead img {
+        height: 5em;
+        margin-right: 1em;
+      }
+
+      .description {
+        padding: 2em;
+        padding-bottom: 0.5em;
+      }
+
+      .configurator {
+        flex: 1 0 auto;
+        background: white;
+      }
+
+      .configurator h2 {
+        display: inline-block;
+        font-size: 1.1em;
+        font-weight: bold;
+        font-family: sans-serif;
+        margin-bottom: 0.75em;
+        margin-top: 0;
+      }
+
+      .configurator ul {
+        list-style: none;
+        margin-left: 0em;
+        padding-left: 0em;
+      }
+
+      .configurator ul li {
+        background: rgba(0, 0, 100, 0.025);
+        position: relative;
+        padding: 1em;
+        padding-left: 6em;
+        padding-right: 2em;
+        margin-left: 0;
+        cursor: pointer;
+      }
+
+      .configurator ul li.active {
+        background: rgba(100, 255, 100, 0.2);
+      }
+
+      .configurator ul li:hover {
+        background: rgba(0, 0, 100, 0.075);
+      }
+
+      .configurator ul li.active:hover {
+        background: rgba(50, 255, 50, 0.2);
+      }
+
+      .configurator .slider {
+        position: absolute;
+        left: 1.75em;
+        height: 20px;
+        width: 44px;
+        pointer-events: none;
+      }
+
+      .configurator .slider input {
+        display: none;
+      }
+
+      .configurator .knob {
+        cursor: pointer;
+        background-color: #ccc;
+        border-radius: 1em;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        position: absolute;
+        transition: 0.4s;
+      }
+
+      .configurator input:checked + .knob {
+        background-color: #66bb6a;
+      }
+
+      .configurator input:checked + .knob:before {
+        transform: translateX(24px);
+      }
+
+      .container {
+            width: 60%;
+            margin: auto;
+            overflow: hidden;
+        }
+        #main-header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+        .content {
+            padding: 1em;
+            background: #fff;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            display: block;
+          font-family: Arial, sans-serif; 
+          font-size: 16px; 
+          line-height: 1.6; 
+          color: #0c0c0c; 
+        }
+
+        .section h1 {
+            margin-top: 0;
+            font-size: larger;
+        }
+        .section label {
+            display: flex;
+            align-items: center;
+        }
+        .section label span {
+            flex: 1;
+        }
+        .radio-group {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+      .configurator .knob:before {
+        background-color: #fff;
+        border-radius: 1em;
+        bottom: 2px;
+        content: "";
+        height: 16px;
+        left: 2px;
+        position: absolute;
+        transition: 0.25s;
+        width: 16px;
+      }
+
+      .rulelist li {
+        display: flex;
+        align-items: center;
+        word-wrap: break-word;
+        cursor: initial !important;
+      }
+
+      .rulelist li button {
+        pointer-events: all;
+        position: absolute;
+        left: 2em;
+        border: 0;
+        cursor: pointer;
+      }
+
+      .rulelist li button:hover {
+        background: red;
+      }
+
+      .ruleoptions,
+      .logoptions {
+        padding: 2em;
+        padding-top: 0;
+      }
+
+      .helptext {
+        padding: 2em;
+        padding-bottom: 0;
+      }
+
+      .saves {
+        text-align: center;
+        padding: 1em;
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+      .saves #clicks {
+        font-size: 2em;
+      }
+      .logList {
+        padding: 2em;
+        border-spacing: 0;
+        margin: auto;
+      }
+      .logList th {
+        background: #cedcff;
+        font-weight: normal;
+        padding: 0.25em 1em;
+      }
+      .logList tr:first-child th {
+        font-weight: bold;
+      }
+      .logList td {
+        text-align: center;
+      }
+      .logList tr:not(:first-child):nth-child(2n) th {
+        background: #eef2ff;
+      }
+      .logList tr:not(:first-child):nth-child(2n + 1) th {
+        background: #e6eafd;
+      }
+      /* consent */
+      .tab_consent h1 {
+        text-align: center;
+      }
+      .cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+      }
+
+      .card {
+        width: calc(33.33% - 10px);
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .card:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: translateY(-5px);
+      }
+
+      .website {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .cookie {
+        margin-left: 15px;
+        border-radius: 5px;
+        padding: 5px;
+        background-color: #f0f0f0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 18px;
+        text-align: left;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        border: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      .download-btn {
+        background-color: #4caf50; /* Green */
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      .revoke-btn {
+        background-color: rgb(224, 7, 7);
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      .revoke-btn:hover {
+        background-color: rgb(147, 17, 17);
+      }
+
+      .download-btn:hover {
+        background-color: #45a049;
+      }
+      .text-banner-choices {
+        margin: 1% 5%;
+        text-align: left;
+      }
+      th,
+      td {
+        text-align: center;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Modal Content */
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      .modal h2 {
+        font-size: 1.5rem;
+      }
+
+      .modal li {
+        font-size: 1rem;
+        text-align: left;
+        line-height: 1.5;
+      }
+
+      .modal a,p {
+        font-size: 1.2rem;
+        display: inline;
+      }
+
+      /* The Close Button */
+      .close-button {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .close-button:hover,
+      .close-button:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .modal-form {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+        .modal-content-form {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* Consent Form Styles */
+        .consent-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 95%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .consent-form div {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .consent-form label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .consent-form input[type="radio"] {
+            margin-right: 10px;
+        }
+        .consent-form button {
+            background: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .consent-form button:hover {
+            background: #218838;
+        }
+        .description-section{
+          display: block;
+          font-family: Arial, sans-serif; 
+          font-size: 16px; 
+          line-height: 1.6; 
+          color: #0c0c0c; 
+        }
+        .about-section{
+          display: block;
+          font-family: Arial, sans-serif; 
+          font-size: 13px; 
+          line-height: 1.2; 
+        }
+
+    </style>
+    <script src="options.js" defer="true"></script>
+  </head>
+
+  <body>
+    <div id="customModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2 id="modalHeading">Your Heading</h2>
+        <ol id="modalList"></ol>
+        <p>Click here:</p>
+        <a id="modalLink" href="#" target="_blank">Click here</a>
+      </div>
+    </div>
+    <div class="prehead">
+      <img
+        src="https://i.nextmedia.com.au/Utils/ImageResizer.ashx?n=https%3A%2F%2Fi.nextmedia.com.au%2FFeatures%2FiStock-1249620423.jpg&w=900&c=0&s=1"
+      />
+      <div class="title">
+        <h1>[[EXTENSION_NAME]]</h1>
+        <h2>[[EXTENSION_SUBTITLE]]</h2>
+      </div>
+    </div>
+    <div class="header">
+      <ul role="tablist">
+        <li
+          class="menuitem choices active"
+          role="tab"
+          tabindex="0"
+          aria-controls="categoryListTab"
+          aria-selected="true"
+        >
+          [[YOUR_CHOICE]]
+        </li>
+        <li
+          class="menuitem general"
+          role="tab"
+          tabindex="-1"
+          aria-controls="generalTab"
+          aria-selected="false"
+        >
+          [[SETTINGS]]
+        </li>
+        <li
+          class="menuitem rules"
+          role="tab"
+          tabindex="-1"
+          aria-controls="rulesListTab"
+          aria-selected="false"
+        >
+          [[RULE_LIST]]
+        </li>
+        <li
+          class="menuitem about"
+          role="tab"
+          tabindex="-1"
+          aria-controls="aboutTab"
+          aria-selected="false"
+        >
+          [[ABOUT]]
+        </li>
+        <li
+          class="menuitem debug"
+          role="tab"
+          tabindex="-1"
+          aria-controls="debugTab"
+          aria-selected="false"
+        >
+          [[DEBUG]]
+        </li>
+        <!-- <li
+          class="menuitem consent"
+          role="tab"
+          tabindex="-1"
+          aria-controls="consentTab"
+          aria-selected="false"
+        >
+          [[CONSENTS]]
+        </li> -->
+        <li
+          class="menuitem consent-table"
+          role="tab"
+          tabindex="-1"
+          aria-controls="consentTable"
+          aria-selected="false"
+        >
+          [[CONSENTSTAB]]
+        </li>
+        <li
+        class="menuitem reco"
+        role="tab"
+        tabindex="-1"
+        aria-controls="recoTab"
+        aria-selected="false"
+      >
+        [[Recommendation]]
+      </li>
+      </ul>
+    </div>
+    <div class="configurator">
+      <div class="tab tab_uc" id="categoryListTab" role="tabpanel" tabindex="0">
+        <div class="helptext">[[CHOICE_DESCRIPTION]]</div>
+        <div class="text-banner-choices">
+          <h2>Essential Cookies</h2>
+          <div class="category_description">
+            Essential cookies are necessary for the basic functions of the
+            website, like logging in, filling out forms, save the stylesheets
+            and navigating pages. These cookies will always be on to ensure the
+            website works properly.
+          </div>
+        </div>
+        <ul class="categorylist">
+          <!-- categories -->
+        </ul>
+      </div>
+      <div
+        class="tab tab_settings"
+        style="display: none"
+        id="generalTab"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <div class="helptext">[[SETTINGS_DESCRIPTION]]</div>
+        <ul class="settingsList">
+          <li class="hideOrPip">
+            <div>[[HIDE_OR_PIP_DESCRIPTION]]</div>
+            <form id="hideOrPip">
+              <div>
+                <label
+                  ><input type="radio" name="hideOrPip" value="pip" />
+                  [[HIDE_OR_PIP_PIP_LABEL]]</label
+                >
+              </div>
+              <div>
+                <label
+                  ><input type="radio" name="hideOrPip" value="hide" />
+                  [[HIDE_OR_PIP_HIDE_LABEL]]</label
+                >
+              </div>
+            </form>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="tab tab_rl"
+        style="display: none"
+        id="rulesListTab"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <div class="helptext">[[RULES_DESCRIPTION]]</div>
+        <ul class="rulelist">
+          <!-- rulelists -->
+        </ul>
+        <div class="ruleoptions">
+          <input id="newurl" type="url" placeholder="https://..." />
+          <button id="urladd">[[ADD_LIST]]</button>
+        </div>
+        <div class="helptext" style="padding-top: 0">
+          <p>[[RULES_UPDATE_DESCRIPTION]]</p>
+          <button id="forceupdate">[[UPDATE_RULES_NOW]]</button
+          ><br /><br /><br />
+          <h2>[[RULE_GENERATOR]]</h2>
+          <p>[[RULE_GENERATOR_DESCRIPTION]]</p>
+          <button id="rulesEditor">[[OPEN_RULE_GENERATOR]]</button>
+        </div>
+      </div>
+      <div
+        class="tab tab_about"
+        style="display: none"
+        id="aboutTab"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <div class="helptext">[[ABOUT_DESCRIPTION]]</div>
+        <div class="saves"><span id="clicks">0</span> [[CLICKS_SAVED]]</div>
+        <table class="logList">
+          <tr>
+            <th>[[WEBSITE]]</th>
+            <th>[[CMP]]</th>
+            <th>[[POPUPS_FILLED]]</th>
+            <th>[[CLICKS_MADE]]</th>
+          </tr>
+        </table>
+        <div class="logoptions">
+          <button id="clearLog">[[CLEAR]]</button>
+        </div>
+        <div class="helptext">
+          <h2>License</h2>
+          <br />
+          Consent Manager is built on top of Consent-O-Matic which is made
+          available on
+          <a href="https://github.com/cavi-au/Consent-O-Matic">Github</a> under
+          the MIT license
+          <p class="about-section">
+            Copyright (c) 2019,2020,2021,2022 Janus Bager Kristensen and Rolf
+            Bagge, CAVI - Center for Advanced Visualization and Interaction,
+            Aarhus University
+          </p>
+          <p class="about-section">
+            Permission is hereby granted, free of charge, to any person
+            obtaining a copy<br />
+            of this software and associated documentation files (the
+            "Software"), to deal<br />
+            in the Software without restriction, including without limitation
+            the rights<br />
+            to use, copy, modify, merge, publish, distribute, sublicense, and/or
+            sell<br />
+            copies of the Software, and to permit persons to whom the Software
+            is<br />
+            furnished to do so, subject to the following conditions:<br />
+          </p>
+          <p class="about-section">
+            The above copyright notice and this permission notice shall be
+            included in all<br />
+            copies or substantial portions of the Software.<br />
+          </p>
+          <p class="about-section">
+            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+            EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+            MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+            NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+            BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+            ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+            CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+            SOFTWARE.
+          </p>
+        </div>
+      </div>
+      <div
+        class="tab tab_dbg"
+        style="display: none"
+        id="debugTab"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <ul class="flags">
+          <!-- debugflags -->
+        </ul>
+        <button id="clearDebugFlags">Clear Debug flags</button>
+      </div>
+      <!-- <div
+        class="tab tab_consent"
+        style="display: none"
+        id="consentTab"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <h1 class="helptext">Consents Accepted</h1>
+        <div class="cards"></div>
+      </div> -->
+      <div
+        class="tab table_consent"
+        style="display: none"
+        id="consentTable"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!-- <h1 class="helptext">Consents Accepted Table</h1> -->
+        <div class="consent-table">
+          <table id="consentTable">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Name of Website</th>
+                <th>Consent Status</th>
+                <th>Date Created</th>
+                <th>Action</th>
+                <th>Revoke</th>
+              </tr>
+            </thead>
+            <tbody class="consent-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div
+      class="tab tab_reco"
+      style="display: none"
+      id="recoTab"
+      role="tabpanel"
+      tabindex="0"
+    >
+      
+      <div class="container">
+        <div class="content">
+           <div class="section">
+                <h2>Cookie Choice Recommender</h2>
+                <p class="description-section">We will review your previous cookie consent 
+                  choices to better inform our recommendations for accepting 
+                  or rejecting cookies. By analyzing your past decisions, we aim 
+                  to provide guidance tailored to your preferences, ensuring a more 
+                  personalized browsing experience.
+
+                  To better understand your preferences, please answer a few scenario-based questions. 
+                  This will help us determine where you are comfortable sharing your data and where you are not.
+                   Your responses will allow us to refine our recommendations and provide you with a more customized 
+                   experience.</p>
+                <div class="radio-group">
+                    <span>Enable Smart Cookie Choice Recommender</span>
+                    <label><input type="radio" name="preferences_functionality" value="enable"> Enable</label>
+                    <label><input type="radio" name="preferences_functionality" value="disable" checked id="disable_reco"> Disable</label>
+                </div>
+            </div>
+        </div>
+        </div>
+      </div>
+      <div id="consentModal" class="modal-form">
+        <div class="modal-content-form">
+          <span class="close">&times;</span>
+          <form id="consentForm" class="consent-form">
+            <div>
+              <label>1. While browsing a news website that tailors content to your interests, would you consent to the site using your personal data to personalize articles and advertisements?</label><br>
+              <input type="radio" name="q1" value="yes" required> Yes
+              <input type="radio" name="q1" value="no" required> No
+            </div>
+            <div>
+              <label>2. While shopping online, if the website offers to show recommendations based on items you viewed, would you agree to share your browsing history on their site?</label><br>
+              <input type="radio" name="q2" value="yes" required> Yes
+              <input type="radio" name="q2" value="no" required> No
+            </div>
+            <div>
+              <label>3. If an online store offers discounts in exchange for permission to sell your personal information to third parties, would you accept the offer or choose to opt out?</label><br>
+              <input type="radio" name="q3" value="yes" required> Yes
+              <input type="radio" name="q3" value="no" required> No
+            </div>
+            <div>
+              <label>4. An e-commerce app proposes 
+                to store your past purchases and browsing 
+                data to speed up future transactions and offer 
+                relevant deals. Would you consent to this data usage
+                 for a faster and more personalized shopping experience?</label><br>
+              <input type="radio" name="q4" value="yes" required> Yes
+              <input type="radio" name="q4" value="no" required> No
+          </div>
+          <div>
+              <label>5. A health app offers to track your physical activity and dietary habits to provide tailored health advice and fitness challenges. Would you permit the app to use this sensitive health data for these personalized services?</label><br>
+              <input type="radio" name="q5" value="yes" required> Yes
+              <input type="radio" name="q5" value="no" required> No
+          </div>
+          <div>
+              <label>6. During setup, a fitness tracker app asks if it can use your location and workout intensity data to suggest nearby fitness events and track your progress over time. Would you agree to share this information for enhanced functionality?</label><br>
+              <input type="radio" name="q6" value="yes" required> Yes
+              <input type="radio" name="q6" value="no" required> No
+          </div>
+          <div>
+              <label>7. A collaboration tool used at your workplace asks if it can analyze your usage patterns to suggest more efficient ways of working and customizing your user interface. Would you be comfortable with this analysis to enhance your productivity?</label><br>
+              <input type="radio" name="q7" value="yes" required> Yes
+              <input type="radio" name="q7" value="no" required> No
+          </div>
+          <div>
+              <label>8. When signing up for a new social media platform that integrates with other services, would you permit it to use your email or social profiles for seamless integration across platforms?</label><br>
+              <input type="radio" name="q8" value="yes" required> Yes
+              <input type="radio" name="q8" value="no" required> No
+          </div>
+          <div>
+              <label>9. If a mapping app offers to provide real-time traffic updates and route suggestions, do you agree to let it use your location data to deliver these services?</label><br>
+              <input type="radio" name="q9" value="yes" required> Yes
+              <input type="radio" name="q9" value="no" required> No
+          </div>
+          <div>
+              <label>10. When you visit a multimedia content platform, would you agree to share your browsing data to receive personalized content and ad recommendations across their network?</label><br>
+              <input type="radio" name="q10" value="yes"required > Yes
+              <input type="radio" name="q10" value="no" required > No
+          </div>
+          <div>
+              <label>11. Imagine you are using a professional networking site. Would you agree to share your professional data with potential employers listed on the platform for job opportunities?</label><br>
+              <input type="radio" name="q11" value="yes" required > Yes
+              <input type="radio" name="q11" value="no" required> No
+          </div>
+          <div>
+              <label>12. On a gaming platform that offers enhanced social features like live streaming and friend suggestions, do you permit it to share your gameplay activity with social media sites?</label><br>
+              <input type="radio" name="q12" value="yes" required> Yes
+              <input type="radio" name="q12" value="no" required> No
+          </div>
+          <div>
+              <label>13. If a financial management app offers to provide personalized budgeting advice based on your spending habits, would you consent to it using your transaction data for this purpose?</label><br>
+              <input type="radio" name="q13" value="yes" required> Yes
+              <input type="radio" name="q13" value="no" required> No
+          </div>
+          <div>
+              <label>14. If a consumer survey company offers you a free monthly subscription to a premium service in exchange for sharing your shopping data to analyze consumer trends, would you agree?</label><br>
+              <input type="radio" name="q14" value="yes" required> Yes
+              <input type="radio" name="q14" value="no" required> No
+          </div>
+          <div>
+              <label>15. When using a video streaming service, if it offers to use your activity data to tailor advertisements across other websites you visit, would you allow this?</label><br>
+              <input type="radio" name="q15" value="yes" required> Yes
+              <input type="radio" name="q15" value="no" required> No
+          </div>
+          <div>
+              <label>16. For a website that deals with sensitive content, would you prefer to provide your consent each time you access different categories of content?</label><br>
+              <input type="radio" name="q16" value="yes" required> Yes
+              <input type="radio" name="q16" value="no" required> No
+          </div>
+          <div>
+              <label>17. If a CRM system needs to access your data to enhance customer support services, are you willing to allow third-party service providers access to your personal data?</label><br>
+              <input type="radio" name="q17" value="yes" required> Yes
+              <input type="radio" name="q17" value="no" required> No
+          </div>
+          <div>
+              <label>18. Would you allow a research firm to use your usage data if it helps them improve user experience and develop new features for the app you frequently use?</label><br>
+              <input type="radio" name="q18" value="yes" required> Yes
+              <input type="radio" name="q18" value="no" required> No
+          </div>
+          <div>
+              <label>19. If an online marketplace uses data from your previous purchases to offer personalized deals through its affiliates, would you agree to share your purchase history?</label><br>
+              <input type="radio" name="q19" value="yes" required> Yes
+              <input type="radio" name="q19" value="no" required> No
+          </div>
+          <div>
+              <label>20. In the event of a legal investigation, would you consent to disclose your personal data to authorities if it was necessary for your safety?</label><br>
+              <input type="radio" name="q20" value="yes" required> Yes
+              <input type="radio" name="q20" value="no" required> No
+          </div>
+          <div>
+              <label>21. If a loyalty program offers exclusive deals from partner brands, would you agree to share your contact details with these selected marketing partners?</label><br>
+              <input type="radio" name="q21" value="yes" required> Yes
+              <input type="radio" name="q21" value="no" required> No
+          </div>
+          <div>
+              <label>22. If an online tool offers to synchronize your preferences across all its platforms to streamline your usage experience, would you be comfortable sharing your data across these platforms?</label><br>
+              <input type="radio" name="q22" value="yes" required> Yes
+              <input type="radio" name="q22" value="no" required> No
+          </div>
+          <div>
+              <label>23. Would you be comfortable if a cloud storage provider stores your personal data for processing and service enhancement, knowing it could improve file access speeds and reliability?</label><br>
+              <input type="radio" name="q23" value="yes" required> Yes
+              <input type="radio" name="q23" value="no" required> No
+          </div>
+            <button type="button" id="submitConsentForm">Submit</button>
+          </form>
+        </div>
+      </div>
+      
+  </div>
+    </div>
+  </body>
+</html>
+

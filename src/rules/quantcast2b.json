@@ -1,0 +1,291 @@
+{
+    "$schema": "https://raw.githubusercontent.com/cavi-au/Consent-O-Matic/master/rules.schema.json",
+    "quantcast2b": {
+        "detectors": [
+            {
+                "presentMatcher": [
+                    {
+                        "type": "css",
+                        "target": {
+                            "selector": ".qc-cmp2-container"
+                        }
+                    }
+                ],
+                "showingMatcher": [
+                    {
+                        "type": "css",
+                        "target": {
+                            "selector": ".qc-cmp2-container #qc-cmp2-ui",
+                            "displayFilter": true
+                        }
+                    }
+                ]
+            }
+        ],
+        "methods": [
+            {
+                "action": {
+                    "type": "list",
+                    "actions": [
+                        {
+                            "type": "waitcss",
+                            "target": {
+                                "selector": ".qc-cmp2-summary-buttons button[mode=\"secondary\"]"
+                            },
+                            "retries": 10,
+                            "waitTime": 250
+                        },
+                        {
+                            "type": "click",
+                            "target": {
+                                "selector": ".qc-cmp2-summary-buttons button[mode=\"secondary\"]",
+                                "textFilter": [
+                                    "Indstillinger",
+                                    "MORE OPTIONS",
+                                    "FLERE MULIGHEDER"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "name": "OPEN_OPTIONS"
+            },
+            {
+                "action": {
+                    "type": "list",
+                    "actions": [
+                        {
+                            "type": "foreach",
+                            "target": {
+                                "selector": ".qc-cmp2-list-item"
+                            },
+                            "action": {
+                                "type": "list",
+                                "actions": [
+                                    {
+                                        "type": "click",
+                                        "target": {
+                                            "selector": ":scope > button"
+                                        }
+                                    },
+                                    {
+                                        "type": "ifcss",
+                                        "target": {
+                                            "selector": ".qc-cmp2-list-item-title",
+                                            "textFilter": [
+                                                "Store and/or access information on a device",
+                                                "Use precise geolocation data",
+                                                "Actively scan device characteristics for identification",
+                                                "Præcise geoplaceringsoplysninger og identifikation gennem enhedsscanning",
+                                                "Opbevare og/eller tilgå oplysninger på en enhed",
+                                                "Precise geolocation data, and identification through device scanning",
+                                                "Bruge præcise geoplaceringsoplysninger",
+                                                "Aktivt scanne enhedskarakteristika til identifikation"
+                                            ]
+                                        },
+                                        "trueAction": {
+                                            "type": "consent",
+                                            "consents": [
+                                                {
+                                                    "matcher": {
+                                                        "type": "css",
+                                                        "target": {
+                                                            "selector": "button[role='switch'][aria-checked='true']"
+                                                        },
+                                                        "parent": {
+                                                            "selector": ".qc-cmp2-toggle-switch:nth-of-type(1)"
+                                                        }
+                                                    },
+                                                    "toggleAction": {
+                                                        "type": "click",
+                                                        "target": {
+                                                            "selector": ".qc-cmp2-toggle-switch:nth-of-type(1) button"
+                                                        }
+                                                    },
+                                                    "type": "D"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "ifcss",
+                                        "target": {
+                                            "selector": ".qc-cmp2-list-item-title",
+                                            "textFilter": [
+                                                "Create a personalised ads profile",
+                                                "Select personalised ads",
+                                                "Select basic ads",
+                                                "Measure ad performance",
+                                                "Apply market research to generate audience insights",
+                                                "Tilpassede annoncer og tilpasset indhold, annonce- og indholdsmåling, målgruppeindsigter og produktudvikling",
+                                                "Personalised ads and content, ad and content measurement, audience insights and product development",
+                                                "Vælge basisannoncer",
+                                                "Oprette en tilpasset annonceprofil",
+                                                "Vælge tilpassede annoncer",
+                                                "Måle annonceeffektivitet",
+                                                "Anvende markedsundersøgelser til at generere målgruppeindsigter"
+                                            ]
+                                        },
+                                        "trueAction": {
+                                            "type": "consent",
+                                            "consents": [
+                                                {
+                                                    "matcher": {
+                                                        "type": "css",
+                                                        "target": {
+                                                            "selector": "button[role='switch'][aria-checked='true']"
+                                                        },
+                                                        "parent": {
+                                                            "selector": ".qc-cmp2-toggle-switch:nth-of-type(1)"
+                                                        }
+                                                    },
+                                                    "toggleAction": {
+                                                        "type": "click",
+                                                        "target": {
+                                                            "selector": ".qc-cmp2-toggle-switch:nth-of-type(1) button"
+                                                        }
+                                                    },
+                                                    "type": "F"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "ifcss",
+                                        "target": {
+                                            "selector": ".qc-cmp2-list-item-title",
+                                            "textFilter": [
+                                                "Create a personalised content profile",
+                                                "Select personalised content",
+                                                "Measure content performance",
+                                                "Oprette en tilpasset indholdsprofil",
+                                                "Vælge tilpasset indhold",
+                                                "Måle indholdseffektivitet"
+                                            ]
+                                        },
+                                        "trueAction": {
+                                            "type": "consent",
+                                            "consents": [
+                                                {
+                                                    "matcher": {
+                                                        "type": "css",
+                                                        "target": {
+                                                            "selector": "button[role='switch'][aria-checked='true']"
+                                                        },
+                                                        "parent": {
+                                                            "selector": ".qc-cmp2-toggle-switch:nth-of-type(1)"
+                                                        }
+                                                    },
+                                                    "toggleAction": {
+                                                        "type": "click",
+                                                        "target": {
+                                                            "selector": ".qc-cmp2-toggle-switch:nth-of-type(1) button"
+                                                        }
+                                                    },
+                                                    "type": "E"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "ifcss",
+                                        "target": {
+                                            "selector": ".qc-cmp2-list-item-title",
+                                            "textFilter": [
+                                                "Develop and improve products",
+                                                "Udvikle og forbedre produkter"
+                                            ]
+                                        },
+                                        "trueAction": {
+                                            "type": "consent",
+                                            "consents": [
+                                                {
+                                                    "matcher": {
+                                                        "type": "css",
+                                                        "target": {
+                                                            "selector": "button[role='switch'][aria-checked='true']"
+                                                        },
+                                                        "parent": {
+                                                            "selector": ".qc-cmp2-toggle-switch:nth-of-type(1)"
+                                                        }
+                                                    },
+                                                    "toggleAction": {
+                                                        "type": "click",
+                                                        "target": {
+                                                            "selector": ".qc-cmp2-toggle-switch:nth-of-type(1) button"
+                                                        }
+                                                    },
+                                                    "type": "X"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "click",
+                            "target": {
+                                "selector": ".qc-cmp2-footer-links button",
+                                "textFilter": [
+                                    "Legitime interesser",
+                                    "LEGITIMATE INTEREST"
+                                ]
+                            }
+                        },
+                        {
+                            "type": "consent",
+                            "consents": [
+                                {
+                                    "trueAction": {
+                                        "type": "click",
+                                        "target": {
+                                            "selector": ".qc-cmp2-container button",
+                                            "textFilter": [
+                                                "ACCEPT ALL",
+                                                "Fjern indsigelse"
+                                            ]
+                                        }
+                                    },
+                                    "falseAction": {
+                                        "type": "click",
+                                        "target": {
+                                            "selector": ".qc-cmp2-container button",
+                                            "textFilter": [
+                                                "OBJECT ALL",
+                                                "Gør indsigelse mod alt"
+                                            ]
+                                        }
+                                    },
+                                    "type": "X"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "name": "DO_CONSENT"
+            },
+            {
+                "action": {
+                    "type": "click",
+                    "target": {
+                        "selector": ".qc-cmp2-footer button[mode=\"primary\"]"
+                    }
+                },
+                "name": "SAVE_CONSENT"
+            },
+            {
+                "action": {
+                    "type": "hide",
+                    "target": {
+                        "selector": ".qc-cmp-cleanslate"
+                    }
+                },
+                "name": "HIDE_CMP"
+            },
+            {
+                "name": "UTILITY"
+            }
+        ]
+    }
+}

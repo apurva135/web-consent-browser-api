@@ -1,0 +1,296 @@
+{
+    "$schema": "https://raw.githubusercontent.com/cavi-au/Consent-O-Matic/master/rules.schema.json",
+    "didomi.io": {
+        "detectors": [
+            {
+                "presentMatcher": [
+                    {
+                        "type": "css",
+                        "target": {
+                            "selector": "#didomi-host, #didomi-notice"
+                        }
+                    }
+                ],
+                "showingMatcher": [
+                    {
+                        "type": "css",
+                        "target": {
+                            "selector": "body.didomi-popup-open, .didomi-notice-banner"
+                        }
+                    }
+                ]
+            }
+        ],
+        "methods": [
+            {
+                "action": {
+                    "type": "click",
+                    "target": {
+                        "selector": ".didomi-popup-notice-buttons .didomi-button:not(.didomi-button-highlight), .didomi-notice-banner .didomi-learn-more-button"
+                    }
+                },
+                "name": "OPEN_OPTIONS"
+            },
+            {
+                "action": {
+                    "type": "list",
+                    "actions": [
+                        {
+                            "type": "waitcss",
+                            "target": {
+                                "selector": "#didomi-purpose-cookies"
+                            },
+                            "retries": 50,
+                            "waitTime": 50
+                        },
+                        {
+                            "type": "foreach",
+                            "target": {
+                                "selector": "#didomi-host .didomi-consent-popup-data-processing"
+                            },
+                            "action": {
+                                "type": "list",
+                                "actions": [
+                                    {
+                                        "type": "ifcss",
+                                        "target": {
+                                            "selector": ".didomi-components-accordion",
+                                            "textFilter": [
+                                                "Store and/or access information on a device",
+                                                "Actively scan device characteristics for identification",
+                                                "Use precise geolocation data",
+                                                "Authentication and authorization management",
+                                                "Functionality"
+                                            ]
+                                        },
+                                        "trueAction": {
+                                            "type": "consent",
+                                            "consents": [
+                                                {
+                                                    "trueAction": {
+                                                        "type": "click",
+                                                        "target": {
+                                                            "selector": ":scope > .didomi-consent-popup-data-processing__buttons .didomi-components-radio__option:nth-child(2)"
+                                                        }
+                                                    },
+                                                    "falseAction": {
+                                                        "type": "click",
+                                                        "target": {
+                                                            "selector": ":scope > .didomi-consent-popup-data-processing__buttons .didomi-components-radio__option:nth-child(1)"
+                                                        }
+                                                    },
+                                                    "type": "D"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "ifcss",
+                                        "target": {
+                                            "selector": ".didomi-components-accordion",
+                                            "textFilter": [
+                                                "Create a personalised ads profile",
+                                                "Apply market research to generate audience insights",
+                                                "Measure ad performance",
+                                                "Select basic ads",
+                                                "Select personalised ads",
+                                                "Storage and access to geolocation information for targeted advertising purposes",
+                                                "Offer personalised advertising"
+                                            ]
+                                        },
+                                        "trueAction": {
+                                            "type": "consent",
+                                            "consents": [
+                                                {
+                                                    "trueAction": {
+                                                        "type": "click",
+                                                        "target": {
+                                                            "selector": ":scope > .didomi-consent-popup-data-processing__buttons .didomi-components-radio__option:nth-child(2)"
+                                                        }
+                                                    },
+                                                    "falseAction": {
+                                                        "type": "click",
+                                                        "target": {
+                                                            "selector": ":scope > .didomi-consent-popup-data-processing__buttons .didomi-components-radio__option:nth-child(1)"
+                                                        }
+                                                    },
+                                                    "type": "F"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "ifcss",
+                                        "target": {
+                                            "selector": ".didomi-components-accordion",
+                                            "textFilter": [
+                                                "Create a personalised content profile",
+                                                "Measure content performance",
+                                                "Select personalised content",
+                                                "Optimise navigation and suggested content",
+                                                "Contact",
+                                                "Usage Statistics",
+                                                "Live tracking of behaviours on a website for assistance and error-tracking"
+                                            ]
+                                        },
+                                        "trueAction": {
+                                            "type": "consent",
+                                            "consents": [
+                                                {
+                                                    "trueAction": {
+                                                        "type": "click",
+                                                        "target": {
+                                                            "selector": ":scope > .didomi-consent-popup-data-processing__buttons .didomi-components-radio__option:nth-child(2)"
+                                                        }
+                                                    },
+                                                    "falseAction": {
+                                                        "type": "click",
+                                                        "target": {
+                                                            "selector": ":scope > .didomi-consent-popup-data-processing__buttons .didomi-components-radio__option:nth-child(1)"
+                                                        }
+                                                    },
+                                                    "type": "E"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "ifcss",
+                                        "target": {
+                                            "selector": ".didomi-components-accordion",
+                                            "textFilter": [
+                                                "Develop and improve products"
+                                            ]
+                                        },
+                                        "trueAction": {
+                                            "type": "consent",
+                                            "consents": [
+                                                {
+                                                    "trueAction": {
+                                                        "type": "click",
+                                                        "target": {
+                                                            "selector": ":scope > .didomi-consent-popup-data-processing__buttons .didomi-components-radio__option:nth-child(2)"
+                                                        }
+                                                    },
+                                                    "falseAction": {
+                                                        "type": "click",
+                                                        "target": {
+                                                            "selector": ":scope > .didomi-consent-popup-data-processing__buttons .didomi-components-radio__option:nth-child(1)"
+                                                        }
+                                                    },
+                                                    "type": "X"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "ifcss",
+                                        "target": {
+                                            "selector": ".didomi-components-accordion",
+                                            "textFilter": [
+                                                "Audience measurement and content performance",
+                                                "Analytics"
+                                            ]
+                                        },
+                                        "trueAction": {
+                                            "type": "consent",
+                                            "consents": [
+                                                {
+                                                    "trueAction": {
+                                                        "type": "click",
+                                                        "target": {
+                                                            "selector": ":scope > .didomi-consent-popup-data-processing__buttons .didomi-components-radio__option:nth-child(2)"
+                                                        }
+                                                    },
+                                                    "falseAction": {
+                                                        "type": "click",
+                                                        "target": {
+                                                            "selector": ":scope > .didomi-consent-popup-data-processing__buttons .didomi-components-radio__option:nth-child(1)"
+                                                        }
+                                                    },
+                                                    "type": "B"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "click",
+                            "target": {
+                                "selector": ".didomi-consent-popup-view-vendors-list-link"
+                            }
+                        },
+                        {
+                            "type": "consent",
+                            "consents": [
+                                {
+                                    "trueAction": {
+                                        "type": "click",
+                                        "target": {
+                                            "selector": ".didomi-consent-popup-container-click-all .didomi-components-radio .didomi-components-radio__option:nth-child(2)"
+                                        }
+                                    },
+                                    "falseAction": {
+                                        "type": "click",
+                                        "target": {
+                                            "selector": ".didomi-consent-popup-container-click-all .didomi-components-radio .didomi-components-radio__option:nth-child(1)"
+                                        }
+                                    },
+                                    "type": "X"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "click",
+                            "target": {
+                                "selector": ".didomi-components-button:first-child"
+                            },
+                            "parent": {
+                                "selector": ".didomi-consent-popup-footer .didomi-consent-popup-actions"
+                            }
+                        }
+                    ]
+                },
+                "name": "DO_CONSENT"
+            },
+            {
+                "action": {
+                    "type": "click",
+                    "target": {
+                        "selector": ".didomi-components-button:first-child"
+                    },
+                    "parent": {
+                        "selector": ".didomi-consent-popup-footer .didomi-consent-popup-actions"
+                    }
+                },
+                "name": "SAVE_CONSENT"
+            },
+            {
+                "action": {
+                    "type": "list",
+                    "actions": [
+                        {
+                            "type": "hide",
+                            "target": {
+                                "selector": "#didomi-popup"
+                            },
+                            "forceHide": true
+                        },
+                        {
+                            "type": "hide",
+                            "target": {
+                                "selector": "#didomi-consent-popup"
+                            }
+                        }
+                    ]
+                },
+                "name": "HIDE_CMP"
+            },
+            {
+                "name": "UTILITY"
+            }
+        ]
+    }
+}

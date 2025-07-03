@@ -1,0 +1,119 @@
+// consentReceipt.js
+
+const consentReceipt = {
+    "@context": "",
+    "@id": "",
+    "@type": "dpv:ConsentRecord",
+    "dct:conformsTo": "https://w3id.org/dpv/schema/iso-27560",
+    "dct:identifier": "a6f58318-72e6-46a2-bfd7-f36d795e30cd",
+    "dpv:hasDataSubject": {
+      "@id": "https://example.com/data-subject-id",
+      "@type": "dpv:DataSubject",
+      "dct:identifier": "jane.doe@example.com",
+    },
+    "dct:created": "2023-05-01",
+    "dct:modified": "2023-05-02",
+    "dct:creator": "Example Corp",
+    "dct:publisher": "Example Corp",
+    "dct:accessRights": "Internal use only",
+    "dct:contributor": "Data Protection Officer",
+    "dct:hasVersion": "1.0",
+    "dct:replaces": "https://example.com/consent-records/previous-id",
+    "dct:source": "User input",
+    "dct:valid": "2024-05-01",
+    "dpv:hasNotice": [
+      {
+        "@id": "https://example.com/notices/a6f58318-72e6-46a2-bfd7-f36d795e30cd",
+        "@type": "dpv:ConsentNotice",
+        "dct:date": "2023-01-01",
+        "dct:language": "EN",
+        "dct:coverage": "2023-01-01/P12M",
+      },
+    ],
+    "dpv:hasPersonalDataHandling": [
+      {
+        "@type": "dpv:PersonalDataHandling",
+        "dpv:hasPurpose": {
+          "@type": "dpv:Marketing",
+          "dct:description": "Sending newsletters to the customer",
+        },
+        "dpv:hasPersonalData": [
+          {
+            "@type": "dpv-pd:EmailAddress",
+            "dct:description": "The customer's email address",
+          },
+        ],
+        "dpv:hasRecipient": [
+          {
+            "@type": "dpv:Recipient",
+            "@id": "ex:MarketingPartner",
+            "dpv:hasLocation": "loc:EU",
+          },
+        ],
+        "dpv:hasConsentManagement": [
+          {
+            "@type": "dpv:WithdrawConsent",
+            "dpv:isExercisedAt": "https://example.com/manage-consent",
+          },
+        ],
+        "dpv:hasJurisdiction": "loc:EU",
+        "dpv:hasRight": [
+          {
+            "@type": "dpv:DataSubjectRight",
+            "dct:title": "Right to Withdraw Consent",
+            "dpv:isExercisedAt": "https://example.com/rights",
+            "dpv:hasApplicableLaw": "dpv-gdpr:GDPR",
+            "dpv:hasJurisdiction": "loc:EU",
+          },
+        ],
+        "dpv:hasService": {
+          "@type": "dpv:Service",
+          "dct:title": "Movie Streaming",
+        },
+        "dpv:hasOrganisationalMeasure": {
+          "@type": "dpv:CodeOfConduct",
+          "dct:title": "Code of Conduct on Processing Personal Data",
+          "schema:url": "https://example.com/CoC",
+        },
+        "dpv:hasAssessment": {
+          "@type": "dpv:DPIA",
+          "schema:url": "https://example.com/DPIA",
+        },
+      },
+    ],
+    "dpv:hasEntity": [
+      {
+        "@id": "https://example.com/AcmeInc",
+        "@type": "dpv:DataController",
+        "dpv:hasName": "Acme Inc.",
+        "dpv:hasIdentifier": "https://example.com/AcmeInc",
+        "schema:contactPoint": {
+          "@type": "schema:ContactPoint",
+          "schema:contactType": "Customer Service",
+          "schema:email": "contact@acme.com",
+          "schema:telephone": "+00-000-000",
+          "url": "https://example.com/social-media/DM",
+          "schema:address": {
+            "@type": "schema:PostalAddress",
+            "schema:streetAddress": "Example Avenue, Example, 000-000",
+          },
+        },
+        "schema:url": "https://example.com/",
+      },
+    ],
+    "dpv:hasConsentStatus": [
+      {
+        "@type": "dpv:ConsentGiven",
+        "dpv:isIndicatedBy": "dpv:DataSubject",
+        "dpv:isIndicatedAtTime": "2023-11-05T16:08:50",
+        "dpv:hasDuration": {
+          "@type": "dpv:TemporalDuration",
+          "rdf:value": "P6M",
+        },
+        "dpv:hasIndicationMethod": "Agree button in dialogue",
+      },
+    ],
+  };
+  
+  module.exports = consentReceipt;
+  
